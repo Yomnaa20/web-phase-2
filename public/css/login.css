@@ -1,5 +1,6 @@
 /* Center the login form on the page */
-body {
+
+.container{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +10,6 @@ body {
   font-family: sans-serif;
   background-color: white;
 }
-
 .login-form {
   width: 400px;
   margin: auto;
@@ -23,7 +23,7 @@ body {
   box-shadow: 8px 8px 8px;
 }
 
-h2 {
+.login-form h2 {
   font-size: xx-large;
   margin-bottom: 50px;
   margin-left: 33%;
@@ -34,7 +34,7 @@ label {
   font-weight: bold;
   margin-bottom: 5px;
 }
-input[type="text"],
+.form .input[type="text"],
   input[type="password"] {
     width: 100%;
         padding: 8px;
@@ -43,7 +43,7 @@ input[type="text"],
         border: 1px solid #ccc;
         border-radius: 5px;
   }
-.input-box {
+.form .input-box {
   width: calc(100% - 20px); /* Adjusted width to consider padding */
   padding: 10px;
   margin-bottom: 15px;
