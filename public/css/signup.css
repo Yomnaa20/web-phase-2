@@ -12,10 +12,11 @@ body{
       border: 1px solid grey;
       border-radius: 5px;
       position: absolute;
-      top: 50%;
+      top: 60%;
       left: 50%;
       transform: translate(-50%, -50%);
       box-shadow: 8px 8px 8px;
+      margin-top: 65;
   }
   
   .sign-up-form h1 {
