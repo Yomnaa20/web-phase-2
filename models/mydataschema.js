@@ -1,4 +1,3 @@
-// ./models/mydataschema.js
 const mongoose = require('mongoose');
 
 const mydataSchema = new mongoose.Schema({
@@ -6,11 +5,9 @@ const mydataSchema = new mongoose.Schema({
   lastname: String,
   email: String,
   password: String,
-  day: Number,
-  month: Number,
-  year: Number
+  birthdate: String
 });
 
 const Mydata = mongoose.model('Mydata', mydataSchema);
 
-module.exports = Mydata;
+module.exports = Mydata;
