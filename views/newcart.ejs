@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/newcart.css">
+    <script src="/js/cart.js"></script>
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="cart-page">
+        <div class="cart-content">
+            <h1>Shopping Cart</h1>
+            <div class="cart-item">
+                <img src="https://img-c.udemycdn.com/course/750x422/246154_d8b0_3.jpg" alt="Course Image">
+                <div class="cart-item-details">
+                    <h3>100 Days of Code: The Complete Python Pro Bootcamp</h3>
+                    <p>By Dr. Angela Yu, Developer and Lead Instructor</p>
+                    <div class="rating">
+                        <span class="stars">★★★★☆</span>
+                        <span>(303,414 ratings)</span>
+                    </div>
+                    <p>58.5 total hours • 638 lectures • All Levels</p>
+                </div>
+                <div class="cart-item-price">
+                    <a href="#" class="remove-button">Remove</a>
+                    <p>£2,299.99</p>
+                    <div id="empty-cart-message" style="display: none;">
+                        <p>Cart is empty!</p>
+                        <img src="data:image/png;base64,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" alt="Empty Cart">
+                    </div>
+                </div>               
+            </div>
+        </div>
+       
+        <div class="cart-summary">
+            
+            <a href="checkout.html">
+                <button class="checkout-btn">Checkout</button>
+            </a>
+            <div class="coupon">
+                <input type="text" id="coupon-code" placeholder="Enter Coupon">
+                <button id="apply-coupon">Apply</button>
+                </div>
+                <div id="cart-total">Total: <strong>£2,299.99</strong></div>
+                <div id="success-message" class="success-message" style="display: none;"></div>
+            </div>
+           
+            
+        </div>
+    </div>
+</body>
+<%- include('./partials/navend.ejs') %>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="adminmanagement.css">
+<title>Admin Dashboard</title>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    <div class="user-list">
+        <h2>Survey List</h2>
+        <table id="user-table">
+            <thead>
+                <tr>
+                    <th>Question ID</th>
+                    <th>Question</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-id="1">
+                    <td>1</td>
+                    <td>Moatassem Ahmed</td>
+                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
+                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
+                </tr>
+                <tr data-id="2">
+                    <td>2</td>
+                    <td>Yomna</td>
+                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
+                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
+                </tr>
+                <tr data-id="3">
+                    <td>3</td>
+                    <td>Hana</td>
+                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
+                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
+                </tr>
+                <tr data-id="4">
+                    <td>4</td>
+                    <td>Hassan</td>
+                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
+                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
+                </tr>
+                <tr data-id="5">
+                    <td>5</td>
+                    <td>Mohammed</td>
+                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
+                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
+                </tr>
+                <tr data-id="6">
+                    <td>6</td>
+                    <td>Rawan</td>
+                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
+                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h2>Add New User</h2>
+        <form id="add-user-form">
+            <label for="user-id">Question ID:</label>
+            <input type="text" id="user-id" name="user-id">
+            <label for="username">Question:</label>
+            <input type="text" id="username" name="username">
+            <button type="submit" class="btn">Add Question</button>
+        </form>
+    </div>
+</div>
+
+<script src="adminsurvey.js"></script>
+</body>
+</html>

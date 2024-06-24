@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quiz</title>
+    <link rel="stylesheet" href="/css/survey page.css" />
+  </head>
+  <body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="app">
+      <h1>Course Survey</h1>
+      <div class="quiz">
+        <h2 id="question">Is this course suitable for you?</h2>
+        <div id="answer-buttons">
+          <button class="btn" id="yes-btn">Yes</button>
+          <button class="btn" id="no-btn">No</button>
+        </div>
+        <button id="next-btn">Next</button>
+      </div>
+    </div>
+    <script src="survey page.js"></script>
+    <%- include('./partials/navend.ejs') %>
+  </body>
+</html>
+
