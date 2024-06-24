@@ -1,0 +1,147 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>sign up </title>
+  <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+
+  <div class="sign-up-form">
+    <h1>Sign up</h1>
+    <form action="/submit" method="post">
+      <label for="firstname">First Name:</label>
+      <input id="firstname" type="text" class="input-box" name="firstname" placeholder="First name" required><br>
+      
+      <label for="lastname">Last Name:</label>
+      <input id="lastname" type="text" class="input-box" name="lastname" placeholder="Last name" required><br>
+      
+      <label for="email">Email:</label>
+      <input id="email" type="email" class="input-box" name="email" placeholder="Your email" required><br>
+      
+      <label for="password">Password:</label>
+      <input id="password" type="password" class="input-box" name="password" placeholder="Your Password" required><br>
+      
+      <label for="birthdate">Birth Date:</label><br>
+      
+      <label for="day">Day:</label>
+      <select id="day" name="day" class="input-box" required>
+        <option value="">Day</option>
+      </select>
+      
+      <label for="month">Month:</label>
+      <select id="month" name="month" class="input-box" required>
+        <option value="">Month</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+      
+      <label for="year">Year:</label>
+      <select id="year" name="year" class="input-box" required>
+        <option value="">Year</option>
+      </select>
+      <br>
+      <input type="text" name="profileImage" placeholder="Profile Image URL">
+      <div class="checkbox-container">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to the terms and conditions</label>
+      </div>
+      
+      <button type="submit">Sign up</button>
+    </form>
+  </div>
+  <script src="/public/js/signup.js"></script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+  <%- include('./partials/nav.ejs') %>
+
+  <% if (errors && errors.length > 0) { %>
+    <div class="alert alert-danger">
+      <% errors.forEach(function(error) { %>
+        <p><%= error.msg %></p>
+      <% }); %>
+    </div>
+  <% } %>
+  <% if (success_msg) { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+  <% } %>
+
+  <div class="sign-up-form">
+    <h1>Sign Up</h1>
+    <form action="/signup" method="post">
+      <label for="firstname">First Name:</label>
+      <input id="firstname" type="text" class="input-box" name="firstname" placeholder="First name" value="<%= firstname %>" required><br>
+      
+      <label for="lastname">Last Name:</label>
+      <input id="lastname" type="text" class="input-box" name="lastname" placeholder="Last name" value="<%= lastname %>" required><br>
+      
+      <label for="email">Email:</label>
+      <input id="email" type="email" class="input-box" name="email" placeholder="Your email" value="<%= email %>" required><br>
+      
+      <label for="password">Password:</label>
+      <input id="password" type="password" class="input-box" name="password" placeholder="Your Password" required><br>
+      
+      <label for="birthdate">Birth Date:</label><br>
+      
+      <label for="day">Day:</label>
+      <select id="day" name="day" class="input-box" required>
+        <option value="">Day</option>
+        <% for (var i = 1; i <= 31; i++) { %>
+          <option value="<%= i %>" <%= day == i ? 'selected' : '' %>><%= i %></option>
+        <% } %>
+      </select>
+      
+      <label for="month">Month:</label>
+      <select id="month" name="month" class="input-box" required>
+        <option value="">Month</option>
+        <option value="1" <%= month == 1 ? 'selected' : '' %>>January</option>
+        <option value="2" <%= month == 2 ? 'selected' : '' %>>February</option>
+        <option value="3" <%= month == 3 ? 'selected' : '' %>>March</option>
+        <option value="4" <%= month == 4 ? 'selected' : '' %>>April</option>
+        <option value="5" <%= month == 5 ? 'selected' : '' %>>May</option>
+        <option value="6" <%= month == 6 ? 'selected' : '' %>>June</option>
+        <option value="7" <%= month == 7 ? 'selected' : '' %>>July</option>
+        <option value="8" <%= month == 8 ? 'selected' : '' %>>August</option>
+        <option value="9" <%= month == 9 ? 'selected' : '' %>>September</option>
+        <option value="10" <%= month == 10 ? 'selected' : '' %>>October</option>
+        <option value="11" <%= month == 11 ? 'selected' : '' %>>November</option>
+        <option value="12" <%= month == 12 ? 'selected' : '' %>>December</option>
+      </select>
+      
+      <label for="year">Year:</label>
+      <select id="year" name="year" class="input-box" required>
+        <option value="">Year</option>
+        <% var currentYear = new Date().getFullYear(); %>
+        <% for (var i = currentYear; i >= 1900; i--) { %>
+          <option value="<%= i %>" <%= year == i ? 'selected' : '' %>><%= i %></option>
+        <% } %>
+      </select>
+      <br>
+      
+      <label for="profileImage">Profile Image URL:</label>
+      <input type="text" id="profileImage" name="profileImage" placeholder="Profile Image URL" value="<%= profileImage %>">
+      
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script src="/public/js/signup.js"></script>
+</body>
+</html>

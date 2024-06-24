@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/userprofile.css">
+</head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+
+    <main>
+        <div class="profile">
+            <h2>User Profile</h2>
+            <hr>
+            <ul>
+                <li>Username: Laura Adams </li><br><br>
+                <li>Email Address:<a href="#">lauraadams@yahoo.com</a></li><br><br>
+                <li>Payment Details: <strong>***********6351</strong></li><br><br>
+                <li><a href="/purchasehistory">Purchase History </a></li><br><br>
+                <li><a href="coursesinprogress.html">Courses in Progress </a></li><br><br>
+                <li><a href="#">Close Account</a></li><br><br>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </main>
+
+<%- include('./partials/navend.ejs') %>
+</body>
+</html>
