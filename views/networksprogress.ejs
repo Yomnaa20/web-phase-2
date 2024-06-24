@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/courses.css">
+    <title>Course Page</title>
+</head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="course-page">
+        <header class="course-header">
+            <div class="course-title">
+                <h1>Fundamentals of Computer Hacking</h1>
+                <div class="rating">
+                    <span>4.2</span>
+                    <span class="stars">★★★★☆</span>
+                    <span>(14,831 ratings)</span>
+                </div>
+                <p>254,929 Students | 2 hours Total | Published August 2017</p>
+            </div>
+        </header>
+        <main class="course-content">
+            <div class="video-section">
+                <iframe width="100%" height="500" src="https://www.youtube.com/embed/95_36NgiaMY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="content-list">
+                <h2>Course content</h2>
+                <ul>
+                    <li><input type="checkbox" id="lesson1"><label for="lesson1">Introduction to Networking - 5 min</label></li>
+                    <li><input type="checkbox" id="lesson2"><label for="lesson2">Understanding Network Topologies - 10 min</label></li>
+                    <li><input type="checkbox" id="lesson3"><label for="lesson3">Network Hardware and Devices - 15 min</label></li>
+                    <li><input type="checkbox" id="lesson4"><label for="lesson4">IP Addressing and Subnetting - 20 min</label></li>
+                    <li><input type="checkbox" id="lesson5"><label for="lesson5">Network Protocols and Standards - 10 min</label></li>
+                    <li><input type="checkbox" id="lesson6"><label for="lesson6">Wireless Networking Basics - 15 min</label></li>
+                </ul>
+                <details>
+                    <summary>Section 2: Network Configuration</summary>
+                    <ul>
+                        <li><input type="checkbox" id="lesson7"><label for="lesson7">Configuring Routers and Switches - 20 min</label></li>
+                        <li><input type="checkbox" id="lesson8"><label for="lesson8">Setting Up a Home Network - 20 min</label></li>
+                        <li><input type="checkbox" id="lesson9"><label for="lesson9">Network Security Basics - 15 min</label></li>
+                        <li><input type="checkbox" id="lesson10"><label for="lesson10">Troubleshooting Network Issues - 15 min</label></li>
+                        <li><input type="checkbox" id="lesson11"><label for="lesson11">VPN Configuration and Use - 20 min</label></li>
+                    </ul>
+                </details>
+                <details>
+                    <summary>Section 3: Advanced Networking Concepts</summary>
+                    <ul>
+                        <li><input type="checkbox" id="lesson12"><label for="lesson12">Introduction to VLANs - 20 min</label></li>
+                        <li><input type="checkbox" id="lesson13"><label for="lesson13">Understanding QoS - 25 min</label></li>
+                        <li><input type="checkbox" id="lesson14"><label for="lesson14">Network Monitoring and Management - 15 min</label></li>
+                        <li><input type="checkbox" id="lesson15"><label for="lesson15">Introduction to SDN - 15 min</label></li>
+                        <li><input type="checkbox" id="lesson16"><label for="lesson16">Future Trends in Networking - 10 min</label></li>
+                    </ul>
+                </details>
+            </div>
+            
+        </main>
+    </div>
+</body>
+<%- include('./partials/navend.ejs') %>
+</html>

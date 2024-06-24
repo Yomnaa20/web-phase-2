@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="/css/surveypage.css" />
+</head>
+<body>
+    <div class="app">
+        <h1>Course Survey</h1>
+        <div class="quiz">
+            <h2 id="question">Is this course suitable for you?</h2>
+            <div id="answer-buttons">
+                <button class="btn" id="yes-btn">Yes</button>
+                <button class="btn" id="no-btn">No</button>
+            </div>
+            <button id="next-btn">Next</button>
+        </div>
+    </div>
+    
+    <script>
+        const questions = <%- JSON.stringify(questions) %>;
+        const questionElement = document.getElementById("question");
+        const yesButton = document.getElementById("yes-btn");
+        const noButton = document.getElementById("no-btn");
+        const nextButton = document.getElementById("next-btn");
+    
+        let currentQuestionIndex = 0;
+        let pr = 0;
+        let digital = 0;
+        let branding = 0;
+        let n = 0;
+    
+        function showScore() {
+          if (currentQuestionIndex === questions.length) {
+            nextButton.style.display = "block";
+            let result = "";
+            if (pr > digital && pr > branding) {
+              result = "We recommend 'Managing Social Media with Public Relations' courses for you";
+            } else if (pr < digital && digital > branding) {
+              result = "We recommend 'Marketing Fundamentals: Discover The 5 Marketing Pillars' course for you";
+            } else if (pr < branding && digital < branding) {
+              result = "We recommend 'Intro to Branding' course for you";
+            } else if (pr == 0 && digital == 0 && branding == 0) {
+              result = "We see this major doesn't match with your interests, You can view more majors on our website";
+            } else if (digital == pr && branding == pr) {
+              result = "We see you have equal interests in this major! feel free to choose any course";
+            } else if (digital == branding) {
+              result = "We suggest 'Marketing Fundamentals: Discover The 5 Marketing Pillars' or 'Intro to Branding' courses for you";
+            } else if (branding == pr) {
+              result = "We suggest 'Intro to Branding' or 'Managing Social Media with Public Relations' courses for you";
+            } else if (digital == pr) {
+              result = "We suggest 'Marketing Fundamentals: Discover The 5 Marketing Pillars' or 'Managing Social Media with Public Relations' courses for you";
+            }
+            
+            questionElement.innerHTML = result;
+            yesButton.style.display = "none";
+            noButton.style.display = "none";
+            nextButton.innerHTML = "Play Again";
+          } else {
+            showQuestion();
+          }
+        }
+    
+        function showQuestion() {
+          const currentQuestion = questions[currentQuestionIndex];
+          let questionNo = currentQuestionIndex + 1;
+          questionElement.innerHTML = questionNo + "." + currentQuestion.question;
+          nextButton.style.display = "none";
+        }
+    
+        function handleAnswer(isCorrect) {
+          if (isCorrect) {
+            if (questions[currentQuestionIndex].quesId === 1) {
+              digital++;
+            } else if (questions[currentQuestionIndex].quesId === 2) {
+              branding++;
+            } else {
+              pr++;
+            }
+          } else {
+            n++;
+          }
+          currentQuestionIndex++;
+          showScore();
+        }
+    
+        yesButton.addEventListener("click", () => {
+          handleAnswer(true);
+        });
+    
+        noButton.addEventListener("click", () => {
+          handleAnswer(false);
+        });
+    
+        nextButton.addEventListener("click", () => {
+          if (currentQuestionIndex === questions.length) {
+            currentQuestionIndex = 0;
+            pr = 0;
+            digital = 0;
+            branding = 0;
+            yesButton.style.display = "block";
+            noButton.style.display = "block";
+            showQuestion();
+          } else {
+            showQuestion();
+          }
+        });
+    
+        showQuestion();
+      </script>
+
+
+
+</body>
+</html>
+

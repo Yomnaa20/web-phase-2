@@ -1,0 +1,68 @@
+
+<head>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/newheader.css">
+    <script src="/js/newheader.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<header>
+
+<input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    <div class="menu">
+      <form action="/search" method="get">
+        <input type="text" class="Search" placeholder="Search" id="Search">
+        <button onclick="search()">Search</button>
+      </form>
+        <% if (!isAuthenticated) { %>
+            <a href="/signup" class="signup">Sign Up</a>
+            <a href="/login" class="login">Log In</a>
+        <% } else { %>
+            <a href="/userprofile" class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+                <span class="profile-initials"><%= user.name ? user.name[0] : ''  %></span>
+            </a>
+            <form action="/logout" method="post" style="display: inline;">
+                <button type="submit" class="logout1">Log Out</button>
+            </form>
+        <% } %>
+        <hr>
+        <div class="categories">
+            <p>Categories:</p>
+            <ul>
+                <li><a href="/development">Development</a></li>
+                <li><a href="/business">Business</a></li>
+                <li><a href="/it">IT & Software</a></li>
+                <li><a href="/design">Design</a></li>
+                <li><a href="/marketing">Marketing</a></li>
+            </ul>
+            <hr>
+            <a href="/maincourses">View all courses</a>
+            <a href="/recentlyadded">Recently added courses</a>
+        </div>
+    </div>
+    <a href="/" class="logo">LearnHub</a>
+    <nav class="navigation">
+      <nav class="navigation">
+        <% if (!isAuthenticated) { %>
+          <a href="/login" class="login">Log In</a>
+          <a href="/signup" class="signup">Sign Up</a>
+        <% } else { %>
+          <a href="/userprofile" class="profile-icon">
+            <i class="fa-solid fa-user"></i>
+            <% if (user && user.name) { %>
+              <span class="profile-initials"><%= user.name ? user.name[0] : '' %></span>
+            <% } else { %>
+              <span class="profile-initials">?</span>
+            <% } %>
+          </a>
+          <form action="/logout" method="post" style="display: inline;">
+            <button type="submit" class="logout">Log Out</button>
+          </form>
+          <div class="iconCart">
+              <a href="/newcart" id="cart-button"><i class="fa-solid fa-cart-shopping"></i></a>
+              <div class="totalQuantity">1</div>
+          </div>
+        <% } %>
+    </nav>
+</header>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recently Added Courses</title>
+    <link rel="stylesheet" href="/css/maincourses.css">
+</head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="topnav">
+        <h2>Recently Added Courses</h2>
+    </div>
+    <div class="container">
+        <% if (courses.length > 0) { %>
+            <% courses.forEach(course => { %>
+                <div class="course">
+                    <h2><%= course.courseName %></h2>
+                    <img src="<%= course.pictureLink %>" alt="<%= course.courseName %> Course Image">
+                    <p><%= course.description %></p>
+                    <a href="coursepage/<%= course._id %>">Learn More</a>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No courses found.</p>
+        <% } %>
+    </div>
+    <div class="end-section">
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <p>Email: learnhub@gmail.com</p>
+            <p>Phone: +2 100 565 8748</p>
+            <a href="#about" class="about">About Us</a>
+        </div>
+    </div>
+</body>
+</html>

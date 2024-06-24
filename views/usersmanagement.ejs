@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/adminmanagement.css">
+<title>Users Management</title>
+</head>
+<body>
+<div class="container">
+    <h1>Users Management</h1>
+    <div class="user-list">
+        <h2>Users List</h2>
+        <table id="user-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Birthdate</th>
+                    <th>Purchases History</th>
+                    <th>Courses in Progress</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                <tr data-id="<%= user._id %>">
+                    <td><%= user.userId %></td>
+                    <td><%= user.firstname %></td>
+                    <td><%= user.lastname %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.birthdate %></td>
+                    <td>
+                        <% if (user.purchasesHistory && user.purchasesHistory.length) { %>
+                            <% user.purchasesHistory.forEach(purchase => { %>
+                                <p>Course: <%= purchase.courseName %> on <%= new Date(purchase.purchaseDate).toDateString() %></p>
+                            <% }) %>
+                        <% } else { %>
+                            <p>No purchase history</p>
+                        <% } %>
+                    </td>
+                    <td><%= user.coursesInProgress.join(', ') %></td>
+                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
+                    <td><button class="btn delete" onclick="deleteUser(this)">Remove user</button></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h2 id="form-title">Add New User</h2>
+        <form id="add-edit-user-form">
+            <label for="user-id">User ID:</label>
+            <input type="text" id="user-id" name="userId">
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname">
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <label for="birthdate">Birthdate (dd/mm/yyyy):</label>
+            <input type="text" id="birthdate" name="birthdate">
+            <label for="purchases-history">Purchases History (courseName:purchaseDate, separated by semicolons):</label>
+            <input type="text" id="purchases-history" name="purchasesHistory">
+            <label for="courses-in-progress">Courses in Progress (comma separated):</label>
+            <input type="text" id="courses-in-progress" name="coursesInProgress">
+            <button type="submit" class="btn" id="submit-button">Add User</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('add-edit-user-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const form = event.target;
+    const userIdInput = document.getElementById('user-id');
+    const firstnameInput = document.getElementById('firstname');
+    const lastnameInput = document.getElementById('lastname');
+    const emailInput = document.getElementById('email');
+    const birthdateInput = document.getElementById('birthdate');
+    const purchasesHistoryInput = document.getElementById('purchases-history');
+    const coursesInProgressInput = document.getElementById('courses-in-progress');
+
+    const userId = userIdInput.value.trim();
+    const firstname = firstnameInput.value.trim();
+    const lastname = lastnameInput.value.trim();
+    const email = emailInput.value.trim();
+    const birthdate = birthdateInput.value.trim();
+    const purchasesHistory = purchasesHistoryInput.value.trim().split(';').map(item => {
+        const [courseName, purchaseDate] = item.split(':');
+        return { courseName, purchaseDate: new Date(purchaseDate) };
+    });
+    const coursesInProgress = coursesInProgressInput.value.trim().split(',');
+
+    if (!userId || isNaN(userId)) {
+        alert('User ID must be a number.');
+        return;
+    }
+
+    if (!firstname) {
+        alert('First Name is required.');
+        return;
+    }
+
+    if (!lastname) {
+        alert('Last Name is required.');
+        return;
+    }
+
+    if (!email) {
+        alert('Email is required.');
+        return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert('Invalid email address.');
+        return;
+    }
+
+    if (!birthdate) {
+        alert('Birthdate is required.');
+        return;
+    }
+
+    const userData = { userId, firstname, lastname, email, birthdate, purchasesHistory, coursesInProgress };
+
+    if (form.getAttribute('data-mode') === 'edit') {
+        const userId = form.getAttribute('data-id');
+        fetch(`/edit-user/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data._id) {
+                const row = document.querySelector(`tr[data-id='${userId}']`);
+                row.cells[0].textContent = data.userId;
+                row.cells[1].textContent = data.firstname;
+                row.cells[2].textContent = data.lastname;
+                row.cells[3].textContent = data.email;
+                row.cells[4].textContent = data.birthdate;
+                row.cells[5].innerHTML = '';
+                if (data.purchasesHistory.length) {
+                    data.purchasesHistory.forEach(purchase => {
+                        const p = document.createElement('p');
+                        p.textContent = `Course: ${purchase.courseName} on ${new Date(purchase.purchaseDate).toDateString()}`;
+                        row.cells[5].appendChild(p);
+                    });
+                } else {
+                    row.cells[5].textContent = 'No purchase history';
+                }
+                row.cells[6].textContent = data.coursesInProgress.join(', ');
+                resetForm();
+            } else {
+                alert('Failed to edit user. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to edit user. Please try again.');
+        });
+    } else {
+        fetch('/add-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'User added successfully') {
+                const userTable = document.getElementById('user-table').getElementsByTagName('tbody')[0];
+                const newRow = userTable.insertRow();
+
+                newRow.setAttribute('data-id', data.data._id);
+
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+                const cell3 = newRow.insertCell(2);
+                const cell4 = newRow.insertCell(3);
+                const cell5 = newRow.insertCell(4);
+                const cell6 = newRow.insertCell(5);
+                const cell7 = newRow.insertCell(6);
+                const cell8 = newRow.insertCell(7);
+                const cell9 = newRow.insertCell(8);
+
+                cell1.textContent = data.data.userId;
+                cell2.textContent = data.data.firstname;
+                cell3.textContent = data.data.lastname;
+                cell4.textContent = data.data.email;
+                cell5.textContent = data.data.birthdate;
+                cell6.innerHTML = '';
+                if (data.data.purchasesHistory.length) {
+                    data.data.purchasesHistory.forEach(purchase => {
+                        const p = document.createElement('p');
+                        p.textContent = `Course: ${purchase.courseName} on ${new Date(purchase.purchaseDate).toDateString()}`;
+                        cell6.appendChild(p);
+                    });
+                } else {
+                    cell6.textContent = 'No purchase history';
+                }
+                cell7.textContent = data.data.coursesInProgress.join(', ');
+                cell8.innerHTML = '<button class="btn edit" onclick="editUser(this)">Edit</button>';
+                cell9.innerHTML = '<button class="btn delete" onclick="deleteUser(this)">Remove user</button>';
+
+                resetForm();
+            } else {
+                alert('Failed to add user. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to add user. Please try again.');
+        });
+    }
+});
+
+function deleteUser(button) {
+    const row = button.parentElement.parentElement;
+    const userId = row.getAttribute('data-id');
+
+    fetch(`/delete-user/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'User deleted successfully') {
+            row.remove();
+        } else {
+            alert('Failed to delete user. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to delete user. Please try again.');
+    });
+}
+
+function editUser(button) {
+    const row = button.parentElement.parentElement;
+    const userId = row.getAttribute('data-id');
+    const userIdValue = row.cells[0].textContent;
+    const firstnameValue = row.cells[1].textContent;
+    const lastnameValue = row.cells[2].textContent;
+    const emailValue = row.cells[3].textContent;
+    const birthdateValue = row.cells[4].textContent;
+    const purchasesHistoryValue = row.cells[5].innerText.split('\n').map(item => {
+        const [courseName, purchaseDate] = item.replace('Course: ', '').split(' on ');
+        return `${courseName}:${purchaseDate}`;
+    }).join(';');
+    const coursesInProgressValue = row.cells[6].textContent;
+
+    document.getElementById('user-id').value = userIdValue;
+    document.getElementById('firstname').value = firstnameValue;
+    document.getElementById('lastname').value = lastnameValue;
+    document.getElementById('email').value = emailValue;
+    document.getElementById('birthdate').value = birthdateValue;
+    document.getElementById('purchases-history').value = purchasesHistoryValue;
+    document.getElementById('courses-in-progress').value = coursesInProgressValue;
+
+    const form = document.getElementById('add-edit-user-form');
+    form.setAttribute('data-mode', 'edit');
+    form.setAttribute('data-id', userId);
+    document.getElementById('form-title').textContent = 'Edit User';
+    document.getElementById('submit-button').textContent = 'Save Changes';
+}
+
+function resetForm() {
+    const form = document.getElementById('add-edit-user-form');
+    form.removeAttribute('data-mode');
+    form.removeAttribute('data-id');
+    document.getElementById('form-title').textContent = 'Add New User';
+    document.getElementById('submit-button').textContent = 'Add User';
+    form.reset();
+}
+</script>
+</body>
+</html>

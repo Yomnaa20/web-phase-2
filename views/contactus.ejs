@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/contactus.css">
+    <script src="/js/contactus.js"></script>
+    <title>Contact Us</title>
+</head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    
+        <a href="index.html" class="logo">LearnHub</a>
+        <nav class="navigation">
+            <a href="login.html">Log in</a>
+            <a href="signup.html">Sign up</a>
+            <a href="userprofile.html" class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+                <span class="profile-initials">LA</span>
+            </a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    
+
+    <main>
+        <div class="contact-container">
+            <h1>Contact Us</h1>
+            <p>If you have any questions or concerns, feel free to reach out to us using the chatbox below or through the following contact information:</p>
+            <p>Email: learnhub@gmail.com</p>
+            <p>Phone: +2 100 565 8748</p>
+        </div>
+
+        <div class="chatbox" id="chatbox">
+            <div class="chat-header">
+                <h2>Chat with us</h2>
+                <button id="close-chat" class="close-chat">x</button>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button id="send-chat" class="send-chat">Send</button>
+            </div>
+        </div>
+    </main>
+
+    <button id="open-chat" class="open-chat">Chat with us</button>
+
+    <script src="chat.js" defer></script>
+</body>
+
+</html>
