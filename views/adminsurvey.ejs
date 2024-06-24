@@ -3,29 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="adminmanagement.css">
+<link rel="stylesheet" href="/css/adminmanagement.css">
 <title>Admin Dashboard</title>
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-</style>
 </head>
 <body>
 <div class="container">
     <h1>Admin Dashboard</h1>
-    <div class="user-list">
+    <div class="question-list">
         <h2>Survey List</h2>
-        <table id="user-table">
+        <table id="question-table">
             <thead>
                 <tr>
                     <th>Question ID</th>
@@ -35,57 +21,118 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-id="1">
-                    <td>1</td>
-                    <td>Moatassem Ahmed</td>
-                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
-                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
-                </tr>
-                <tr data-id="2">
-                    <td>2</td>
-                    <td>Yomna</td>
-                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
-                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
-                </tr>
-                <tr data-id="3">
-                    <td>3</td>
-                    <td>Hana</td>
-                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
-                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
-                </tr>
-                <tr data-id="4">
-                    <td>4</td>
-                    <td>Hassan</td>
-                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
-                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
-                </tr>
-                <tr data-id="5">
-                    <td>5</td>
-                    <td>Mohammed</td>
-                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
-                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
-                </tr>
-                <tr data-id="6">
-                    <td>6</td>
-                    <td>Rawan</td>
-                    <td><button class="btn edit" onclick="editUser(this)">Edit</button></td>
-                    <td><button class="btn delete" onclick="deleteUser(this)">Remove</button></td>
-                </tr>
+                <% surveyList.forEach(function(survey) { %>
+                    <tr>
+                        <td><%= survey.quesId %></td>
+                        <td><%= survey.question %></td>
+                        <td><button class="edit-btn" onclick="editQuestion('<%= survey.quesId %>', '<%= survey.question %>')">Edit</button></td>
+                        <td><button class="delete-btn" onclick="deleteQuestion('<%= survey.quesId %>', '<%= survey.question %>')">Delete</button></td>
+                    </tr>
+                <% }); %>
             </tbody>
         </table>
     </div>
     <div>
-        <h2>Add New User</h2>
-        <form id="add-user-form">
-            <label for="user-id">Question ID:</label>
-            <input type="text" id="user-id" name="user-id">
-            <label for="username">Question:</label>
-            <input type="text" id="username" name="username">
-            <button type="submit" class="btn">Add Question</button>
+        <h2>Add/Edit Question</h2>
+        <form id="question-form">
+            <input type="hidden" id="old-quesId" name="oldQuesId">
+            <input type="hidden" id="old-question" name="oldQuestion">
+            <label for="quesId">Question ID:</label>
+            <input type="text" id="quesId" name="quesId">
+            <label for="question">Question:</label>
+            <input type="text" id="question" name="question">
+            <button type="submit" class="btn">Save Question</button>
         </form>
     </div>
 </div>
 
-<script src="adminsurvey.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const questionForm = document.getElementById('question-form');
+    questionForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const oldQuesId = document.getElementById('old-quesId').value.trim();
+        const oldQuestion = document.getElementById('old-question').value.trim();
+        const quesId = document.getElementById('quesId').value.trim();
+        const question = document.getElementById('question').value.trim();
+
+        if (!quesId || !question) {
+            alert('Both Question ID and Question are required.');
+            return;
+        }
+        try {
+            let response;
+            if (oldQuesId && oldQuestion) {
+                // Edit existing question
+                response = await fetch(`/edit-question/${oldQuesId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ oldQuestion, quesId, newQuestion: question })
+                });
+            } else {
+                // Add new question
+                response = await fetch('/add-question', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quesId, question })
+                });
+            }
+
+            if (!response.ok) {
+                throw new Error('Failed to save question');
+            }
+
+            const result = await response.json();
+            //alert(result.message);
+            location.reload();
+        } catch (error) {
+            console.error('Error saving question:', error);
+            alert('Error saving question');
+        }
+
+        document.getElementById('old-quesId').value = '';
+        document.getElementById('old-question').value = '';
+        document.getElementById('quesId').value = '';
+        document.getElementById('question').value = '';
+    });
+});
+
+function editQuestion(quesId, question) {
+    document.getElementById('old-quesId').value = quesId;
+    document.getElementById('old-question').value = question;
+    document.getElementById('quesId').value = quesId;
+    document.getElementById('question').value = question;
+}
+
+function deleteQuestion(quesId, question) {
+    if (confirm('Are you sure you want to delete this question?')) {
+        fetch(`/delete-question/${quesId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ question })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error deleting question:', error);
+            alert('Error deleting question');
+        });
+    }
+}
+</script>
 </body>
 </html>
+
+
+
+
