@@ -1,0 +1,155 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: black;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5%;
+    top:0;
+    padding-left: 50px;
+    font-family:'Poppins',sans-serif;
+}
+
+.logo {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.8em;
+    margin-left: 7%;
+    margin-top:0;
+}
+
+.menu-icon {
+    display: block;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    font-size: 2em;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    padding-right:70px;
+    
+}
+
+.navigation a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.profile {
+    max-width: 600px;
+    font-family: 'Poppins', sans-serif;
+    top: 30%;
+    left: 50%;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile li {
+    margin-bottom: 10px;
+}
+
+.profile a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+}
+
+.profile a:hover {
+    text-decoration: underline;
+}
+
+.profile h2{
+    text-align:center;
+
+}
+
+.menu {
+    display: flex;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 1000;
+    position: absolute;
+    top: 63px;
+    left: 0;
+    background-color: black !important;
+    width: 25%;
+    padding-left: 10px;
+}
+
+.menu a {
+    transition: 1s ease;
+    text-decoration: none;
+    color: white;
+    margin-bottom: 10px;
+    display: block;
+    width: 70px;
+}
+
+.menu a:hover {
+    background-color: #666;
+    transform: scale(1.1);
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked ~ .menu {
+    display: block;
+}
+
+.menu hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.categories p {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.categories ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.categories li {
+    margin-bottom: 5px;
+}
+
+.categories li a {
+    color: white;
+    text-decoration: none;
+}
+
+.categories li a:hover {
+    text-decoration: underline;
+}
