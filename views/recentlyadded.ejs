@@ -7,7 +7,34 @@
     <link rel="stylesheet" href="/css/maincourses.css">
 </head>
 <body>
-    <%- include('./partials/nav.ejs') %>
+    <header>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+        <div class="menu">
+            <form action="/search" method="get">
+                <input type="text" name="query" class="Search" placeholder="Search">
+                <button type="submit">Search</button>
+            </form>
+            <a href="signup.html" class="signup">Sign Up</a>
+            <a href="login.html" class="login">Log In</a>
+            <hr>
+            <div class="categories">
+                <p>Categories:</p>
+                <ul>
+                    <li><a href="Business.html">Business</a></li>
+                    <li><a href="development.html">Development</a></li>
+                    <li><a href="IT.html">IT & Software</a></li>
+                    <li><a href="design.html">Design</a></li>
+                    <li><a href="markting.html">Marketing</a></li>
+                </ul>
+            </div>
+        </div>
+        <a href="index.html" class="logo">LearnHub</a>
+        <nav class="navigation">
+            <a href="login.html">Log In</a>
+            <a href="signup.html">Sign Up</a>
+        </nav>
+    </header>
     <div class="topnav">
         <h2>Recently Added Courses</h2>
     </div>
